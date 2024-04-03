@@ -1,8 +1,6 @@
-package com.example.jpaTest;
+package com.example.jpaTest.article;
 
-import org.springframework.stereotype.Component;
-
-public class MySQLDB implements com.example.jpaTest.MyDB {
+public class MySQLDB implements MyDB {
     public void run() {
         System.out.println("MySQLDB run");
     }

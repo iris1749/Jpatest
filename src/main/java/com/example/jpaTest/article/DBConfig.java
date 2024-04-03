@@ -1,7 +1,5 @@
-package com.example.jpaTest;
+package com.example.jpaTest.article;
 
-import com.example.jpaTest.MemoryDB;
-import com.example.jpaTest.MyDB;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

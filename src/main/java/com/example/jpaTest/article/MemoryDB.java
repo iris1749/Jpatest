@@ -1,7 +1,4 @@
-package com.example.jpaTest;
-
-import com.example.jpaTest.MyDB;
-import org.springframework.stereotype.Component;
+package com.example.jpaTest.article;
 
 public class MemoryDB implements MyDB {
     public void run() {

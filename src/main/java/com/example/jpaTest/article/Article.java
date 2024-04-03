@@ -1,4 +1,4 @@
-package com.example.jpaTest;
+package com.example.jpaTest.article;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
