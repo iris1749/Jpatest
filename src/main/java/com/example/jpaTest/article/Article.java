@@ -21,8 +21,9 @@ public class Article {
     private String title;
     private String content;
 
-    // 단방향 매핑
-    @ManyToOne
-    private Member member;
+//    // 단방향 매핑
+//    @ManyToOne
+//    @JoinColumn(name="mid")
+//    private Member member;
 
 }
