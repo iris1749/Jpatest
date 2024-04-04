@@ -3,6 +3,7 @@ package com.example.jpaTest;
 import com.example.jpaTest.article.Article;
 import com.example.jpaTest.article.ArticleRepository;
 import jakarta.transaction.Transactional;
+import org.hibernate.dialect.function.array.ArrayToStringFunction;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -144,9 +145,77 @@ class JpaTestApplicationTests {
 	@Transactional
 	@Rollback(false)
 	void t11() {
-		Article article = articleRepository.findById(1).get();
+		Article article = articleRepository.findById(3).get();
 		System.out.println(article.getTitle());
 		System.out.println(article.getContent());
 	}
+
+	@Test
+	@Transactional
+	@Rollback(false)
+	void t12(){
+		Article article1 = new Article();
+		article1.setTitle("제목1");
+		article1.setContent("내용1");
+
+		System.out.println("==========article1 저장==========");
+		articleRepository.save(article1);
+		System.out.println("=================================");
+
+		Article article2 = new Article();
+		article2.setTitle("제목2");
+		article2.setContent("내용2");
+
+		System.out.println("==========article2 저장==========");
+		articleRepository.save(article2);
+		System.out.println("=================================");
+
+	}
+
+	// jpa 쓰기 지연됨
+	@Test
+	@Transactional
+	@Rollback(false)
+	void t13(){
+		Article article1 = articleRepository.findById(1).get();
+		System.out.println(article1.getId());
+		System.out.println(article1.getTitle());
+
+		Article article2 = articleRepository.findById(2).get();
+		System.out.println(article2.getId());
+		System.out.println(article2.getTitle());
+
+		System.out.println("==========article1 삭제==========");
+		articleRepository.delete(article1);
+		System.out.println("=================================");
+
+		System.out.println("==========article2 삭제==========");
+		articleRepository.delete(article2);
+		System.out.println("=================================");
+
+	}
+
+	@Test
+	@Transactional
+	@Rollback(false)
+	void t14(){
+		Article article = articleRepository.findById(3).get();
+
+		article.setTitle("제목44");
+		article.setContent("내용44");
+
+//		articleRepository.save(article);
+
+//		업데이트를 하지 않아도 변경된 쿼리가 있을경우 저절로 update하여 갱신한다.
+
+	}
+
+	// 영속성 컨텍스트
+
+	// 연관 관계
+
+	// 지연로딩
+
+	// 영속성 전이
 
 }
