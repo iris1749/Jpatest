@@ -1,13 +1,12 @@
 package com.example.jpaTest.article;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.example.jpaTest.member.Member;
+import jakarta.persistence.*;
 
 @Entity
 @Getter
@@ -21,5 +20,9 @@ public class Article {
     private  int id;
     private String title;
     private String content;
+
+    // 단방향 매핑
+    @ManyToOne
+    private Member member;
 
 }
