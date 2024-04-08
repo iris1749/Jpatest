@@ -4,6 +4,8 @@ import com.example.jpaTest.article.Article;
 import com.example.jpaTest.article.ArticleService;
 import com.example.jpaTest.article.tag.Tag;
 import com.example.jpaTest.article.tag.TagService;
+import com.example.jpaTest.article.tag.ArticleTag;
+import com.example.jpaTest.article.tag.ArticleTagRepository;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,8 @@ public class TagTest {
     ArticleService articleService;
     @Autowired
     TagService tagService;
+    @Autowired
+    ArticleTagRepository articleTagRepository;
 
     @Test
     @Transactional
@@ -30,12 +34,31 @@ public class TagTest {
         Tag tag2 = tagService.save("공포");
         Tag tag3 = tagService.save("행복");
 
-//        tag1.getArticles().add(article1);
-        article1.getTaglist().add(tag1); // OK
-        article1.getTaglist().add(tag2);
+// 1번 게시물에 1번 태그 추가
+        ArticleTag articleTag1 = new ArticleTag();
+        articleTag1.setArticle(article1);
+        articleTag1.setTag(tag1);
 
-        article2.getTaglist().add(tag1);
-        article2.getTaglist().add(tag3);
+        // 1번 게시물에 2번 태그 추가
+        ArticleTag articleTag2 = new ArticleTag();
+        articleTag2.setArticle(article1);
+        articleTag2.setTag(tag2);
+
+        // 2번 게시물에 1번 태그 추가
+        ArticleTag articleTag3 = new ArticleTag();
+        articleTag3.setArticle(article2);
+        articleTag3.setTag(tag1);
+
+        // 2번 게시물에 3번 태그 추가
+        ArticleTag articleTag4 = new ArticleTag();
+        articleTag4.setArticle(article2);
+        articleTag4.setTag(tag3);
+
+        articleTagRepository.save(articleTag1);
+        articleTagRepository.save(articleTag2);
+        articleTagRepository.save(articleTag3);
+        articleTagRepository.save(articleTag4);
+
     }
 
     // 각 게시물의 태그를 출력

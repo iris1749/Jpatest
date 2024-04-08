@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.example.jpaTest.member.Member;
 import com.example.jpaTest.article.tag.Tag;
+import com.example.jpaTest.article.tag.ArticleTag;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -30,11 +31,14 @@ public class Article {
     @JoinColumn(name="member_id")
     private Member member;
 
-    @ManyToMany
-    @JoinTable(
-            name = "article_tag",
-            joinColumns = @JoinColumn(name = "article_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    private List<Tag> taglist = new ArrayList<>();
+    //    @ManyToMany // 실제로는 이렇게 안함.
+//    @JoinTable(
+//            name = "article_tag",
+//            joinColumns = @JoinColumn(name = "article_id"),
+//            inverseJoinColumns = @JoinColumn(name = "tag_id")
+//    )
+//    private List<Tag> tagList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "article")
+    private List<ArticleTag> articleTags = new ArrayList<>();
 }
