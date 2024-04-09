@@ -32,4 +32,12 @@ public class ArticleService {
 
         return articleRepository.save(article);
     }
+
+    public Article findById(int id) {
+        return articleRepository.findById(id).get();
+    }
+
+    public void delete(Article article) {
+        articleRepository.delete(article);
+    }
 }
