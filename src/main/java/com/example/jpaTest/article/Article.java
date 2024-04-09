@@ -22,16 +22,15 @@ public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int id;
+    private int id;
     private String title;
     private String content;
 
-    // 단방향 매핑
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="member_id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    //    @ManyToMany // 실제로는 이렇게 안함.
+//    @ManyToMany // 실제로는 이렇게 안함.
 //    @JoinTable(
 //            name = "article_tag",
 //            joinColumns = @JoinColumn(name = "article_id"),
@@ -39,6 +38,6 @@ public class Article {
 //    )
 //    private List<Tag> tagList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "article", orphanRemoval = true, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<ArticleTag> articleTags = new ArrayList<>();
 }

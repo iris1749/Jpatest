@@ -2,16 +2,17 @@ package com.example.jpaTest;
 
 import com.example.jpaTest.article.Article;
 import com.example.jpaTest.article.ArticleService;
-import com.example.jpaTest.article.tag.Tag;
-import com.example.jpaTest.article.tag.TagService;
 import com.example.jpaTest.article.tag.ArticleTag;
 import com.example.jpaTest.article.tag.ArticleTagRepository;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.example.jpaTest.article.tag.Tag;
+import com.example.jpaTest.article.tag.TagService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
+
+import java.util.List;
 
 @SpringBootTest
 public class TagTest {
@@ -20,9 +21,13 @@ public class TagTest {
     ArticleService articleService;
     @Autowired
     TagService tagService;
+
     @Autowired
     ArticleTagRepository articleTagRepository;
 
+    @Test
+    @Transactional
+    @Rollback(false)
     void t1() {
         Article article1 = articleService.save("제목1", "내용1");
         Article article2 = articleService.save("제목2", "내용2");
@@ -89,4 +94,37 @@ public class TagTest {
 
     }
 
+    @Test
+    @Transactional
+    @Rollback(false)
+    void t4() {
+        Article article = articleService.findById(1);
+
+        List<ArticleTag> children = article.getArticleTags();
+
+        for (ArticleTag child : children) {
+            System.out.println("제목 : " + child.getArticle().getTitle());
+            System.out.println("태그 : " + child.getTag().getName());
+        }
+
+        children.remove(0);
+        System.out.println("=====================================");
+        for (ArticleTag child : children) {
+            System.out.println("제목 : " + child.getArticle().getTitle());
+            System.out.println("태그 : " + child.getTag().getName());
+        }
+
+
+        // 잘쓰면 좋다.
+        // 부모 객체 중심으로 코드를 짤 수가 있음.
+        // 다른 서비스를 호출하지 않아도 됨.
+
+        // 모르고 쓰면 큰일난다.
+        // 연관관계가 복잡한 경우에 사용하면 안된다.
+        // 한 부모가 완벽히 한 자식을 소유할 때만 사용하길 권장.
+
+        // cascade.remove => 카테고리 : 게시물
+        // cascade.remove, orphanRemoval => 신중하게 사용.
+
+    }
 }
