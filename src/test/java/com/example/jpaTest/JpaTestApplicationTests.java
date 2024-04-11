@@ -281,8 +281,5 @@ class JpaTestApplicationTests {
         }
 
     }
-    // 지연로딩
-
-    // 영속성 전이
 
 }
