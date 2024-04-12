@@ -10,6 +10,7 @@ import com.example.jpaTest.article.tag.Tag;
 import com.example.jpaTest.article.tag.ArticleTag;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,4 +41,6 @@ public class Article {
 
     @OneToMany(mappedBy = "article", orphanRemoval = true, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<ArticleTag> articleTags = new ArrayList<>();
+
+    private LocalDateTime createDate;
 }
